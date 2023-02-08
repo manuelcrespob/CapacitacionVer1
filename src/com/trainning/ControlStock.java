@@ -1,19 +1,16 @@
 package com.trainning;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ControlStock {
 
     public static void stock () {
-        char[] accion = {'t', 'c', 's', 'x','l'};
-        String[] celular = new String[100];
-        String[] smatphone = new String[100];
-        int celularesAgregados = 0;
-        int smartphonesAgregados = 0;
-        int salir = 0;
-        Scanner dato = new Scanner(System.in);
-        String valor = null;
-
+        int exit = 0;
+        Scanner screen = new Scanner(System.in);
+        String value = null;
+        ArrayList<Mobile> mobileList = new ArrayList<Mobile>();
+        SmartPhone smart = new SmartPhone();
         do{
             System.out.println("Ingrese que accion desea realizar:");
             System.out.println("T - Listar todos los dispositivos");
@@ -22,74 +19,79 @@ public class ControlStock {
             System.out.println("S - Agregar un smatphone");
             System.out.println("X - Para Salir");
             System.out.println(" ");
-            valor = dato.nextLine();
+            value = screen.nextLine();
 
-            if (valor.toLowerCase().equals("t")) {
-                ListarTodo(celular, smatphone, celularesAgregados, smartphonesAgregados);
-
-            } else if (valor.toLowerCase().equals("c")) {
-                celular[celularesAgregados] = AgregarCelular();
-                celularesAgregados++;
-
-            } else if (valor.toLowerCase().equals("s")) {
-                smatphone[smartphonesAgregados] = AgregarSmartphone();
-                smartphonesAgregados++;
-
-            } else if (valor.toLowerCase().equals("x")) {
-                salir = 1;
-            } else if (valor.toLowerCase().equals("l")){
-                for(int i=0; i<=smartphonesAgregados; i++)
-                    ListarSmart(smatphone, i);
+            if (value.toLowerCase().equals("t")) {
+                toList(mobileList,value);
+            } else if (value.toLowerCase().equals("c") || value.toLowerCase().equals("s")) {
+                mobileList.add(addMobile(value));
+            } else if (value.toLowerCase().equals("x")) {
+                exit = 1;
+            } else if (value.toLowerCase().equals("l")){
+                listSmart(mobileList, smart);
             }
             else {
                 System.out.println("No ingreso la opción correcta");
             }
-        }while(salir == 0);
+        }while(exit == 0);
     }
 
-    public static void ListarTodo(String celu[], String smart[], int cantidadCelular, int cantidadSmart){
-        for (int i=0; i<cantidadCelular;i++) {
-            System.out.println("Caracteristicas del celular #: " + i);
-            System.out.println(celu[i]);
+    public static void toList(ArrayList<Mobile> mobileList, String value){
+        if(mobileList.size()>0){
+            System.out.println(mobileList);
+        }else{
+            System.out.println("No ingreso ningun dispositivo, debe agregar uno para listar");
         }
-        for (int y=0; y<cantidadSmart;y++){
-            System.out.println("caracteristivas del smartphone #: " + y);
-            System.out.println(smart[y]);
+    }
+    public static void listSmart(ArrayList<Mobile> mobileList, SmartPhone smart){
+        if(mobileList.size()>0){
+            System.out.println("Se intenta mostrar solo los smartphones");
+        }else{
+            System.out.println("No ingreso ningun smartphone, debe agregar uno");
         }
     }
 
-    public static void ListarSmart(String smart[], int cantidad){
-        for (int i=0; i<cantidad;i++){
-            System.out.println("SmartPhone #: " + i);
-            System.out.println(smart[i]);
-        }
-
-    }
-
-    public static String  AgregarCelular(){
-        String celular = null;
+    public static Mobile addMobile( String value){
+		String brand = null;
+        String model = null;
+        String color = null;
+        String so = null;
+        int battery = 0;
         Scanner caracteristicas = new Scanner(System.in);
         System.out.println("Ingrese marca");
-        celular= caracteristicas.nextLine() + ", ";
+        brand = caracteristicas.nextLine();
+        while (brand == null || brand.equals("")){
+            System.out.println("Debe ingrese marca");
+			brand = caracteristicas.nextLine();
+        }
         System.out.println("Ingresar modelo");
-        celular+= caracteristicas.nextLine() + ", ";
+        model = caracteristicas.nextLine();
+		while (model == null || model.equals("")){
+            System.out.println("Debe ingrese marca");
+			model = caracteristicas.nextLine();
+        }
         System.out.println("Ingresar color");
-        celular+= caracteristicas.nextLine();
-        return celular;
-    }
-    public static String AgregarSmartphone(){
-        String smartphone = null;
-        Scanner caracteristicas = new Scanner(System.in);
-        System.out.println("Ingrese marca");
-        smartphone= caracteristicas.nextLine() + ", ";
-        System.out.println("Ingrese modelo");
-        smartphone+= caracteristicas.nextLine() + ", ";
-        System.out.println("Ingreser color");
-        smartphone+= caracteristicas.nextLine() + ", ";
-        System.out.println("Ingrese el sistema operativo");
-        smartphone+= caracteristicas.nextLine() + ", ";
-        System.out.println("Ingrese el tamaño de la bateria");
-        smartphone+= caracteristicas.nextLine();
-        return smartphone;
+        color = caracteristicas.nextLine();
+		while (color == null || color.equals("")){
+            System.out.println("Debe ingrese marca");
+			color = caracteristicas.nextLine();
+        }
+        if (value.equals("c"))
+            return new Phone(brand,model,color);
+        else {
+            System.out.println("Ingrese sistema operativo del dispositivo: ");
+            so = ", " + caracteristicas.nextLine();
+            while (so == null || so.equals("")){
+                System.out.println("Debe ingresar sistema operativo");
+                so=caracteristicas.nextLine();
+            }
+            System.out.println("Ingrese tamaño de bateria");
+            battery = caracteristicas.nextInt();
+            while (battery==0){
+                System.out.println("Debe ingresar un valor numerico de bateria");
+                battery=caracteristicas.nextInt();
+            }
+            return new SmartPhone(brand,model,color,so,battery);
+        }
     }
 }
