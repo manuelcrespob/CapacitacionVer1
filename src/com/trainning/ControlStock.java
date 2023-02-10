@@ -38,19 +38,21 @@ public class ControlStock {
     public static void toList(ArrayList<Mobile> mobileList, String value){
         if(mobileList.size()>0){
             System.out.println(mobileList);
+            System.out.println("\n");
         }else{
             System.out.println("No ingreso ningun dispositivo, debe agregar uno para listar");
         }
     }
     public static void listSmart(ArrayList<Mobile> mobileList){
-        if(mobileList.size()>0){
-            for(int i =0; i<=mobileList.size();i++) {
-                if (mobileList.get(i).getClass().getSimpleName().equals("SmartPhone"))
+        if(mobileList.size()>0) {
+            for (int i = 0; i < mobileList.size(); i++) {
+                if (mobileList.get(i).getClass().getSimpleName().equals("SmartPhone")) {
                     System.out.println(mobileList.get(i));
+                    System.out.println("\n");
+                }
             }
-        }else{
+        } else
             System.out.println("No ingreso ningun smartphone, debe agregar uno");
-        }
     }
 
     public static Mobile addMobile( String value){

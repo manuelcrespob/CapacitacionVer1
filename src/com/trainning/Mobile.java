@@ -18,7 +18,7 @@ public class Mobile {
     }
 
     public String toString(){
-        return "Celular: "+this.getClass().getSimpleName()+" Marca: "+brand+", Modelo: "+model+", Color: "+color +"\n";
+        return "\nCelular: "+this.getClass().getSimpleName()+" Marca: "+brand+", Modelo: "+model+", Color: "+color;
     }
     public Mobile(String brand, String model, String color) {
         this.brand = brand;

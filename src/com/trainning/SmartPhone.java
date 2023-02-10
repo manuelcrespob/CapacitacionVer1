@@ -24,7 +24,7 @@ public class SmartPhone extends Mobile {
 
     @Override
     public String toString(){
-        return super.toString() +", Sistema operativo: " + so + ", Tamaño bateria: "+ battery +"\n";
+        return super.toString() +", Sistema operativo: " + so + ", Tamaño bateria: "+ battery;
     }
 
 }
