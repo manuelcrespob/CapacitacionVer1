@@ -10,7 +10,6 @@ public class ControlStock {
         Scanner screen = new Scanner(System.in);
         String value = null;
         ArrayList<Mobile> mobileList = new ArrayList<Mobile>();
-        SmartPhone smart = new SmartPhone();
         do{
             System.out.println("Ingrese que accion desea realizar:");
             System.out.println("T - Listar todos los dispositivos");
@@ -28,7 +27,7 @@ public class ControlStock {
             } else if (value.toLowerCase().equals("x")) {
                 exit = 1;
             } else if (value.toLowerCase().equals("l")){
-                listSmart(mobileList, smart);
+                listSmart(mobileList);
             }
             else {
                 System.out.println("No ingreso la opción correcta");
@@ -43,9 +42,12 @@ public class ControlStock {
             System.out.println("No ingreso ningun dispositivo, debe agregar uno para listar");
         }
     }
-    public static void listSmart(ArrayList<Mobile> mobileList, SmartPhone smart){
+    public static void listSmart(ArrayList<Mobile> mobileList){
         if(mobileList.size()>0){
-            System.out.println("Se intenta mostrar solo los smartphones");
+            for(int i =0; i<=mobileList.size();i++) {
+                if (mobileList.get(i).getClass().getSimpleName().equals("SmartPhone"))
+                    System.out.println(mobileList.get(i));
+            }
         }else{
             System.out.println("No ingreso ningun smartphone, debe agregar uno");
         }
@@ -77,10 +79,10 @@ public class ControlStock {
 			color = caracteristicas.nextLine();
         }
         if (value.equals("c"))
-            return new Phone(brand,model,color);
+            return new Mobile(brand,model,color);
         else {
             System.out.println("Ingrese sistema operativo del dispositivo: ");
-            so = ", " + caracteristicas.nextLine();
+            so = caracteristicas.nextLine();
             while (so == null || so.equals("")){
                 System.out.println("Debe ingresar sistema operativo");
                 so=caracteristicas.nextLine();
